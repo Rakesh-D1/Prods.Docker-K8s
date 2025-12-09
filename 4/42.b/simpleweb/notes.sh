@@ -1,12 +1,2 @@
-
-
-// Docker desktop it copied the pakcage.json and index.js file from lock windows developing folder to the docker destop linux VM
-// But it did not copeid these files from Docker desktop VM to container while creating the container
-
-// To add this we need to add these steps in the Dockerfile we can see thatin the 42 file
-
-// Now run the docker build command with copying the package .json
-FROM node:14-alpine
-COPY ./pakage.json ./
-RUN npm install
-CMD [ "npm", "start" ]
+// In a final docker image creation the we need to copy the entire project files & folder from the current workfolder in machine to the Docker
+// Desktop Linux Vm and once the code is added there to the VM the entire build image will created by using the current code bas
