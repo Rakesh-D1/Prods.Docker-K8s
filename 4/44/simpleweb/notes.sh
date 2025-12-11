@@ -56,3 +56,4 @@ $ DOCKER_BUILDKIT=0 docker run -i -t b88devops/simpleweb:latest sh
 /usr/app # ls
 index.js           node_modules       package-lock.json  package.json
 /usr/app #
++++
