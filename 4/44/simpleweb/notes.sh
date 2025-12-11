@@ -1,29 +1,58 @@
-// Give a tag name while creating the images 
-// Commd is doce
-// DOCKER_BUILDKIT=0 image build -t imagename . // here we are giving the tag name 
-// Post successfully creatiobn of the Docker image Sending build context to Docker daemon   5.12kB
-Step 1/4 : FROM node:14-alpine
- ---> 434215b487a3
-Step 2/4 : COPY ./ ./
- ---> Using cache
- ---> 4cddc9f08153
-Step 3/4 : RUN npm install
- ---> Using cache
- ---> 07761f56fe26
-Step 4/4 : CMD [ "npm", "start" ]
- ---> Using cache
- ---> 1d7370ba408d
-Successfully built 1d7370ba408d
-Successfully tagged b88devops/simpleweb:latest
+// WORKDIR... directly copying the workspace in the container root directory , we need to create a spearate directory insiode the 
+// COntianer , so it wont clash or override with other container directorires . FOr e.g the contaier root have the bin, var , dev 
+// file if the same we push in the container the name could clash with other application directories.
 
-// Now create a new container using the same node image
-// docker run b88devops/simpleweb:latest
+Now if we have created a container without giveing the WORKDIR
+// Create a docker image 
+$ DOCKER_BUILDKIT=0 docker build -t b88devops/simpleweb 
 
-// Post creation of the container the localhost:8080 wont work now since the port configuration is not done
-// The applicaiton is running on container 8080 we need to connect the contatiner now we have to forward this to the host FS 
+// Now create a container and enter into the shell of the container
+$ docker run -i -t b88devops/simpleweb:latest sh
+result when you run the command ls -la  
+/ # ls -la
+total 100
+drwxr-xr-x    1 root     root          4096 Dec 11 07:02 .
+drwxr-xr-x    1 root     root          4096 Dec 11 07:02 ..
+-rwxr-xr-x    1 root     root             0 Dec 11 07:02 .dockerenv
+drwxr-xr-x    1 root     root          4096 Mar 29  2023 bin
+drwxr-xr-x    5 root     root           360 Dec 11 07:02 dev
+drwxr-xr-x    1 root     root          4096 Dec 11 07:02 etc
+drwxr-xr-x    1 root     root          4096 Mar 29  2023 home
+-rwxr-xr-x    1 root     root           201 Dec  9 14:55 index.js
+drwxr-xr-x    1 root     root          4096 Mar 29  2023 lib
+drwxr-xr-x    5 root     root          4096 Mar 29  2023 media
+drwxr-xr-x    2 root     root          4096 Mar 29  2023 mnt
+drwxr-xr-x   70 root     root          4096 Dec 11 06:57 node_modules
+drwxr-xr-x    1 root     root          4096 Mar 29  2023 opt
+-rw-r--r--    1 root     root         22785 Dec 11 06:57 package-lock.json
+-rwxr-xr-x    1 root     root           109 Dec 11 06:57 package.json
+dr-xr-xr-x  273 root     root             0 Dec 11 07:02 proc
+drwx------    1 root     root          4096 Dec 11 07:03 root
+drwxr-xr-x    2 root     root          4096 Mar 29  2023 run
+drwxr-xr-x    2 root     root          4096 Mar 29  2023 sbin
+drwxr-xr-x    2 root     root          4096 Mar 29  2023 srv
+dr-xr-xr-x   13 root     root             0 Dec 11 07:02 sys
+drwxrwxrwt    1 root     root          4096 Mar 29  2023 tmp
+drwxr-xr-x    1 root     root          4096 Mar 29  2023 usr
+drwxr-xr-x   12 root     root          4096 Mar 29  2023 var
+/ #
 
-docker run -p 8080(host forward port):8080 (container forward port) b88devops/simpleweb:latest
+Insdie the container these files are with the root 
+-rw-r--r--    1 root     root         22785 Dec 11 06:57 package-lock.json
+-rwxr-xr-x    1 root     root           109 Dec 11 06:57 package.json
 
-docker cli will send the command to docker daemon to run & transport the port from container FS to host FS  
+which can later create a conflict
 
-now run the command -  docker run -p 8080:8080 b88devops/simpleweb:latest
+Now create a work directory inside the container to overcome this issue add the "WORKDIR /usr/app " while image creation
+FROM node:14-alpine
+WORKDIR /usr/app    
+COPY ./ ./
+RUN npm install
+CMD [ "npm", "start" ]
+
+Now post creation of the container the /app directory will created and all the node related files will be inside the app folder
+
+$ DOCKER_BUILDKIT=0 docker run -i -t b88devops/simpleweb:latest sh
+/usr/app # ls
+index.js           node_modules       package-lock.json  package.json
+/usr/app #
