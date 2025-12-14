@@ -26,3 +26,13 @@ Now hos port we are mapping with the node port
       - '4001:8081'
 In this line of code
 
+Now to connect with the redis server host we need to connect that with the redis server
+const client = redis.createClient();
+
+Since we haven't defined any connection here it will give the error connection refuse error
+node-app-1      |   errno: -111,
+node-app-1      |   code: 'ECONNREFUSED',
+node-app-1      |   syscall: 'connect',
+node-app-1      |   address: '127.0.0.1',
+
+
