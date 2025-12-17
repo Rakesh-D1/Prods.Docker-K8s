@@ -1,0 +1,6 @@
+*.sh
+# Ignore Dockerfile and .dockerignore files
+Dockerfile
+.dockerignore
+*.pdf
+docker-compose.yml
