@@ -31,3 +31,37 @@ Workflow of the Dockerfile & docker-compose.yml
             the TCP packets will send to TCP packets to docker port 237)
 5. Execution (Here the jenkins docker recive the packets and now it will validate the clinet key with server key.. now it 
             decrypt, it need the image apline for now so it will get download the alpine jenkins-docker)
+
+
+- Here we are using jenkins are build server, jenskins will give the build, jenkins itself will runb in docker. Now how to handle  these issue ,
+or how to handle these complexity
+- What s DIND is docker in docker , post DIND will work on Pipeline as COde
+
+USER root
+RUN apt-get update && apt-get install -y lsb-release
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y docker-ce-cli
+USER jenkins
+
+While installing the Jenkins the user should be changed to root , because it need the root level acces to install
+USER root
+
+Here we are updating & installing the jenkins server & along with the Jenkins server we are installing the docker cli
+
+RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc \
+  https://download.docker.com/linux/debian/gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) \
+  signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
+  https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+
+Post installing the Jenkins we are installing the docker CLI
+RUN apt-get update && apt-get install -y docker-ce-cli
+
+Now after that we are hand over the Jenkins user from the Root post installation
+USER jenkins
