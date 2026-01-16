@@ -80,3 +80,4 @@ MAIN CONCEPT RUN BEHIND THE DIND
 4) Union FS
     Docker iamgs createin a layer , Inside a contaier if the Image is created so the layers need ths storage to store
     To create a storage in the container we need a driver to store those , so thats why we need the Overlay2
+    If we use the DIND the storage we have to define to store the layers of the iamge on the Overlay 2 of the DIDN
