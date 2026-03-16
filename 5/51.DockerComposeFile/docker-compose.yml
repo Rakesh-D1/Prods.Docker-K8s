@@ -1,0 +1,8 @@
+version: '3'
+services:
+  redis-server: #redis runs on port 6379
+    image: 'redis'
+  node-app: #node app running on 8081
+    build: .
+    ports:
+      - '4001:8081'

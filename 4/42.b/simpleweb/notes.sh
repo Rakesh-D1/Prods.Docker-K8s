@@ -1,0 +1,2 @@
+// In a final docker image creation the we need to copy the entire project files & folder from the current workfolder in machine to the Docker
+// Desktop Linux Vm and once the code is added there to the VM the entire build image will created by using the current code bas
