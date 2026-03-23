@@ -23,5 +23,22 @@ agent any
 agent docker:dind
 }
 
-If we add as any it will run the pipeline on any available agent... Her jenkins will parse & pcik tthe nearest one agent
+ - If we add as any it will run the pipeline on any available agent... Her jenkins will parse & pick tthe nearest one agent
+ - The any agent the Jenkins controller could be itself, it will work as node or any other available connected agent node or coonnected worker
+ - Pipeline is devied into stages... Stages are logical phases..
 
+ - Stage will be the child element of the stages 
+
+e.g 
+pipeline {
+agent any
+    stages{
+        stage 
+
+        stage
+    }
+
+agent docker:dind
+}
+
+ - If we have to perform any steps we need to mention that inside the stage...
