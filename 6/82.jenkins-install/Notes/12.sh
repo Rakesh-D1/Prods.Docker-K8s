@@ -41,4 +41,43 @@ agent any
 agent docker:dind
 }
 
- - If we have to perform any steps we need to mention that inside the stage...
+ - If we have to perform any steps we need to mention that inside the steps block...
+ - 
+
+pipeline {
+agent any
+    stages{
+        stage 
+            echo ¨Jenkins¨
+            sh ¨      ¨
+        stage
+    }
+-- Here in the echo ¨Jenkins¨ that will come under the Jenkins level log statement
+-- In sh ¨ "its proper shell command. 
+
+pipeline {
+agent any
+    stages{
+        stage 
+            echo ¨Jenkins¨
+            sh ¨      ¨
+        stage
+    }
+ post {
+ 
+ }
+ In Post for the script ending the task need to perform we need to mention that in the post block...
+ Post block will runb even if the build will get failed.But need to add the condition
+ Post block executes some action need to be run after pipeline or stage fails or finishes
+
+BLOCK
+ always {
+
+ }
+ The block executes even if the stage is success, filiure , aborted , unstabel state in any condition the build will executes
+
+ BLOCK
+ cleanWs()
+ This block in jenkins will completely delelte the workspace directory, for the next build if a new build need to create then the 
+ older build need to delete. No remenent file will be remain there
+ It will delte the older artifacts remained
