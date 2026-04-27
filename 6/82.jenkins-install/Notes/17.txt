@@ -1,0 +1,9 @@
+Feb 7
+
+In free style project we dont need to write any Pipeline as a code script so itcanbee sacrooss the for a free style project
+
+WHat part Jenkins play in CI:
+
+Every time when team changes the code , then the latest code once the jenkins detect it will pull it,
+build it, then it will create the artifacts & after that it will deploy is the Contineous Integration.
+
